@@ -1,0 +1,22 @@
+<?php
+/*
+*   @Model Generate By JsonDb
+*   @Autor Dellacurtais <maicon@inclouds.com.br>
+*   @Date Generate <%DATE%>
+*/
+
+
+class ModelJdb_%NAME% extends JsonDb_Json {
+    /*
+    * @override Function - Set Datas
+    */
+    public function setDatas(){
+        %SET%
+    }
+    /*
+    * @override Function - Set Many
+    */
+    public function hasMany(){
+        %MANY%
+    }
+}
