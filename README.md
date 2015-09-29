@@ -1,1 +1,1 @@
-[ Full Documentation ](http://jsondb.inclouds.com.br/:_blank)
+[ Full Documentation ](http://jsondb.inclouds.com.br/)
