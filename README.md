@@ -1,1 +1,1 @@
-# [ Veja a Documentação Completa/Full Documentation ](jsobdb.inclouds.com.br)
+# [ Full Documentation ](jsobdb.inclouds.com.br)
