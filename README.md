@@ -1,1 +1,1 @@
-<a href="http://jsondb.inclouds.com.br/" target="_blank">Full Documentation</a>
+[ Full Documentation ](http://jsondb.inclouds.com.br/:_blank)
