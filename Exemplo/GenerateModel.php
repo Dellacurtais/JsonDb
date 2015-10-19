@@ -7,7 +7,7 @@ require("_Setup.php");
 * JsonDb_Create Class to create model
 * @Arg Name of Model
 */
-$Create = new JsonDb_Create("User");
+$Create = new JsonDb_Create("Users");
 
 /**
 *
@@ -22,7 +22,7 @@ $Create = new JsonDb_Create("User");
 $Create->setColun('Nome','varchar',20);
 $Create->setColun('Sobrenome','varchar',20);
 $Create->setColun('Nascimento','date');
-$Create->setColun('Sexo','singleOptions',array("--","f","m"),"--");
+$Create->setColun('Sexo','singleOption',array("--","f","m"),"--");
 $Create->setColun('Email','varchar',50);
 $Create->setColun('Password','varchar',50);
 
@@ -34,7 +34,17 @@ $Create->setColun('Password','varchar',50);
 *   $key2 - Column of the Relational Model
 * $Create->setMany($model,$key1,$key2);   
 */
-$Create->setMany("Adress","id","UserId");
+$Create->setMany("Adress","_Id","UserId");
 
 //Save Model
+$Create->save();
+
+//Create Relational Model
+$Create = new JsonDb_Create("Adress");
+$Create->setColun('Adress','varchar');
+$Create->setColun('City','varchar');
+$Create->setColun('State','varchar');
+$Create->setColun('Country',"varchar");
+$Create->setColun('ZipCode','varchar');
+$Create->setColun('UserId','varchar');
 $Create->save();

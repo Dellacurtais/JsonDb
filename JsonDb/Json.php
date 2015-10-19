@@ -370,20 +370,32 @@ abstract class JsonDb_Json extends JsonDb_Property {
                 }
 
             }
-
-            if (isset($this->_Relative[$key]) && $this->_GetRelative[str_replace("_","",$key)]){
+			
+			$ModelRelative = substr($key,1);
+            if (isset($this->_Relative[$key]) && $this->_GetRelative[$ModelRelative]){
                 $fromRelative = $this->_Relative[$key][0];
-                $toRelative = $this->_Relative[$key][1];
-                $Class = "ModelJdb_".$key;
-                if (is_array($this->$key)){
+                $toRelative = $this->_Relative[$key][1];				
+                $Class = "ModelJdb_".$ModelRelative;
+				if (is_array($this->$key)){
                     $Parent = new $Class();
+					$isNeedSaveParent = false;
                     foreach ($this->$key as $k => $obj) {
-                        foreach ($obj as $kid => $vp) {
-                            $Parent->$kid = $vp;
-                        }
-                        $Parent->$toRelative = $this->$fromRelative;
-                        $Parents[] = $Parent;
+						if (is_array($obj)){
+							$Parent = new $Class();
+							foreach ($obj as $kid => $vp) {
+								$Parent->$kid = $vp;								
+							}
+							$Parent->$toRelative = $this->$fromRelative;
+							$Parents[] = $Parent;
+						}else{
+							$Parent->$k = $obj;
+							$isNeedSaveParent = true;
+						}
                     }
+					if ($isNeedSaveParent){
+						$Parent->$toRelative = $this->$fromRelative;
+						$Parents[] = $Parent;
+					}
                 }
             }
         }

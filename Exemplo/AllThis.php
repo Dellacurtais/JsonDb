@@ -20,7 +20,7 @@ JsonDb_Core::getInstance()->setDir("../JsonDb/ModelJdb/");
 * JsonDb_Create Class to create model
 * @Arg Name of Model
 */
-$Create = new JsonDb_Create("User");
+$Create = new JsonDb_Create("Users");
 
 /**
 *
@@ -35,7 +35,7 @@ $Create = new JsonDb_Create("User");
 $Create->setColun('Nome','varchar',20);
 $Create->setColun('Sobrenome','varchar',20);
 $Create->setColun('Nascimento','date');
-$Create->setColun('Sexo','singleOptions',array("--","f","m"),"--");
+$Create->setColun('Sexo','singleOption',array("--","f","m"),"--");
 $Create->setColun('Email','varchar',50);
 $Create->setColun('Password','varchar',50);
 
@@ -47,9 +47,19 @@ $Create->setColun('Password','varchar',50);
 *   $key2 - Column of the Relational Model
 * $Create->setMany($model,$key1,$key2);   
 */
-$Create->setMany("Adress","id","UserId");
+$Create->setMany("Adress","_Id","UserId");
 
 //Save Model
+$Create->save();
+
+//Create Relational Model
+$Create = new JsonDb_Create("Adress");
+$Create->setColun('Adress','varchar');
+$Create->setColun('City','varchar');
+$Create->setColun('State','varchar');
+$Create->setColun('Country',"varchar");
+$Create->setColun('ZipCode','varchar');
+$Create->setColun('UserId','varchar');
 $Create->save();
 
 
@@ -87,6 +97,45 @@ $Create->save();
 		print_r($Errors);
 	}
 
+//Inser New Data With Relative Model
+	$User = new ModelJdb_Users();
+	$User->getRelative("Adress");
+
+	$User->Nome = "Felipe";
+	$User->Sobrenome = "Smith";
+	$User->Nascimento = "18/10/1995";
+	$User->Sexo = "m";
+	$User->Email = "felipesmith@exemplo.com.br";
+	$User->Password = sha1("123456");
+		$User->_Adress['Adress'] = "16?18?";
+		$User->_Adress['City'] = "QD 34 LT 10";
+		$User->_Adress['State'] = "Seu Pai";
+		$User->_Adress['Country'] = "Meu Braço";
+		$User->_Adress['ZipCode'] = "Quebrou";
+	$User->save();
+	
+//Inser New Data With Relative Model (Many Data)
+	$User = new ModelJdb_Users();
+	$User->getRelative("Adress");
+
+	$User->Nome = "Felipe";
+	$User->Sobrenome = "Smith";
+	$User->Nascimento = "18/10/1995";
+	$User->Sexo = "m";
+	$User->Email = "felipesmith@exemplo.com.br";
+	$User->Password = sha1("123456");
+		$User->_Adress[0]['Adress'] = "16?18?";
+		$User->_Adress[0]['City'] = "QD 34 LT 10";
+		$User->_Adress[0]['State'] = "Seu Pai";
+		$User->_Adress[0]['Country'] = "Meu Braço";
+		$User->_Adress[0]['ZipCode'] = "Quebrou";
+		$User->_Adress[1]['Adress'] = "16?18?";
+		$User->_Adress[1]['City'] = "QD 34 LT 10";
+		$User->_Adress[1]['State'] = "Seu Pai";
+		$User->_Adress[1]['Country'] = "Meu Braço";
+		$User->_Adress[1]['ZipCode'] = "Quebrou";
+	$User->save();	
+	
 //Update Data
 	$Model = new ModelJdb_Users();
 	$Model->findOneByNome("Felipe");
@@ -98,4 +147,12 @@ $Create->save();
 	$Model->findOneByNome("Felipe");
 	if ($Model instanceof ModelJdb_Users){
 		$Model->remove(false); 
-	}	
+	}
+
+//FindBy
+$User = new ModelJdb_Users();
+$User->getRelative("Adress");
+$Data = $User->findByNome("Felipe")->toArray();
+echo "<pre>";
+print_r($Data);
+echo "</pre>";
