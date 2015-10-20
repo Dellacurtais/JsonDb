@@ -869,7 +869,24 @@ abstract class JsonDb_Json extends JsonDb_Property {
         $this->setDatas();
         return $this;
     }
-
+	
+	
+	/**
+	*	Models to Cvs
+	*/
+	public function getCvs(){
+		$NewJson = JsonDb_JsonCvs();
+		if (count($this->_DataResult) > 0){
+			$NewJson->headerDownload($this->_Name.".cvs");
+			$NewJson->toCvs(current($this->_DataResult),$this->_DataResult)	;
+			die();
+		}else{
+			$NewJson->headerDownload($this->_Name.".cvs");
+			$NewJson->toCvs(current($this->_Data),$this->_Data)	;
+			die();	
+		}
+	}
+	
     /*
      * Call Functions
      */
