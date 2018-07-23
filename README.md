@@ -1,1 +1,1 @@
-[ Full Documentation ](http://jsondb.inclouds.com.br/)
+[ Full Documentation ](http://incloud.ga/jsondb/)
